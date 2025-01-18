@@ -5,24 +5,24 @@ import { createClient } from "../utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 const getURL = () => {
-    let url = '';
+    let url = 'https://dad-jokes-virid-beta.vercel.app';
 
-    // Check if it's a development environment
-    if (process.env.NODE_ENV === 'development') {
-        url = 'http://localhost:3000/';
-    } 
-    // Check if it's a Vercel Preview Deployment
-    else if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-        url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-    }
-    // Default to Production URL if none of the above are true
-    else {
-        url = process?.env?.NEXT_PUBLIC_SITE_URL ?? 'https://dad-jokes-virid-beta.vercel.app';
-    }
+    // // Check if it's a development environment
+    // if (process.env.NODE_ENV === 'development') {
+    //     url = 'http://localhost:3000/';
+    // } 
+    // // Check if it's a Vercel Preview Deployment
+    // else if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    //     url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+    // }
+    // // Default to Production URL if none of the above are true
+    // else {
+    //     url = process?.env?.NEXT_PUBLIC_SITE_URL ?? 'https://dad-jokes-virid-beta.vercel.app';
+    // }
 
-    // Ensure it starts with http/https and ends with a trailing slash
-    url = url.startsWith('http') ? url : `https://${url}`;
-    url = url.endsWith('/') ? url : `${url}/`;
+    // // Ensure it starts with http/https and ends with a trailing slash
+    // url = url.startsWith('http') ? url : `https://${url}`;
+    // url = url.endsWith('/') ? url : `${url}/`;
 
     return url;
 }
