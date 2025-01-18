@@ -34,7 +34,7 @@ export async function signup(formData) {
 
     const {error} = await supabase.auth.signUp({
         ...data,
-        emailRedirectTo: env === 'developement' ?  'http://localhost:3000/' : 'https://dad-jokes-virid-beta.vercel.app'
+        emailRedirectTo: env === 'production' && 'https://dad-jokes-virid-beta.vercel.app'
     });
 
     if (error) {
