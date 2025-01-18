@@ -55,11 +55,9 @@ export async function signup(formData) {
     const {error} = await supabase.auth.signUp({
         ...data,
         options: {
-            emailRedirectTo: getURL(),
+            emailRedirectTo: 'https://dad-jokes-virid-beta.vercel.app',
           },
     });
-
-    console.log(getURL());
 
     if (error) {
         console.error(error);
