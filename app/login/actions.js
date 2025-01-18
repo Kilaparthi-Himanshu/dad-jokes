@@ -23,13 +23,19 @@ export async function login(formData) {
 }
 
 export async function signup(formData) {
+    const env = process.env.NODE_ENV;
+    console.log(env);
+
     const supabase = await createClient();
     const data = {
         email: formData.get('email'),
         password: formData.get('password')
     }
 
-    const {error} = await supabase.auth.signUp(data);
+    const {error} = await supabase.auth.signUp({
+        ...data,
+        emailRedirectTo: env === 'production' ? 'https://dad-jokes-virid-beta.vercel.app' : 'http://localhost:3000/'
+    });
 
     if (error) {
         console.error(error);
