@@ -48,6 +48,8 @@ export async function signup(formData) {
           },
     });
 
+    console.log(getURL());
+
     if (error) {
         console.error(error);
         redirect('/error');
