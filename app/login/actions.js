@@ -29,7 +29,15 @@ export async function signup(formData) {
         password: formData.get('password')
     }
 
-    const {error} = (await supabase).auth.signUp(data);
+    const redirectTo =
+        process.env.NODE_ENV === 'production'
+            ? 'https://dad-jokes-virid-beta.vercel.app/'
+            : 'http://localhost:3000';
+
+    const {error} = (await supabase).auth.signUp({
+        ...data,
+        options: { redirectTo }
+    });
 
     if (error) {
         console.error(error);
