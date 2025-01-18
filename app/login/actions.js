@@ -29,7 +29,7 @@ export async function signup(formData) {
         password: formData.get('password')
     }
 
-    const {error} = await supabase.auth.signUp({data});
+    const {error} = await supabase.auth.signUp(data);
 
     if (error) {
         console.error(error);
