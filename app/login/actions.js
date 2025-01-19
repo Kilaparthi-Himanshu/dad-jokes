@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 export async function login(formData) {
     const supabase = await createClient();
@@ -23,8 +24,7 @@ export async function login(formData) {
 }
 
 export async function signup(formData) {
-    const env = process.env.NODE_ENV;
-    console.log(env);
+    const origin = headers().get("origin"); // Get the current environment's origin
 
     const supabase = await createClient();
     const data = {
@@ -34,7 +34,7 @@ export async function signup(formData) {
 
     const {error} = await supabase.auth.signUp({
         ...data,
-        emailRedirectTo: env === 'production' && 'https://dad-jokes-virid-beta.vercel.app'
+        emailRedirectTo: `${origin}`, // Dynamically set the redirect URL
     });
 
     if (error) {
