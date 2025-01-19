@@ -24,28 +24,7 @@ export async function login(formData) {
 }
 
 export async function signup(formData) {
-    const getURL = () => {
-        // If in a browser context
-        if (typeof window !== "undefined") {
-          const url = new URL(window.location.href); // Get the full URL
-          return `${url.origin}/`; // Extract the origin (base URL) and ensure a trailing slash
-        }
-
-        // Fallback for server-side rendering (e.g., development or non-browser context)
-        let url = "";
-        if (process.env.NODE_ENV === "development") {
-          url = "http://localhost:3000/";
-        } else if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-          url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-        } else {
-          url = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dad-jokes-virid-beta.vercel.app/";
-        }
-      
-        return url.endsWith("/") ? url : `${url}/`;
-    };
-    
-    const origin = getURL(); // Dynamically fetch the origin
-
+    const origin = headers().get("origin");
     const supabase = await createClient();
     const data = {
         email: formData.get('email'),
@@ -54,7 +33,9 @@ export async function signup(formData) {
 
     const {error} = await supabase.auth.signUp({
         ...data,
-        emailRedirectTo: `${origin}`, // Dynamically set the redirect URL
+        options: {
+            emailRedirectTo: `${origin}`
+        }
     });
 
     if (error) {
