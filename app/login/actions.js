@@ -24,7 +24,7 @@ export async function login(formData) {
 }
 
 export async function signup(formData) {
-    const origin = (await headers()).get();
+    const origin = (await headers()).get("origin");
     const supabase = await createClient();
     const data = {
         email: formData.get('email'),
